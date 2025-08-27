@@ -1,38 +1,46 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
+import CountdownTimer from "./UI/CountdownTimer";
 
-import fallbackNft from "../images/nftImage.jpg";
-import fallbackAuthor from "../images/author_thumbnail.jpg";
-
-
-export default function NFTCard({ item }) {
-  // I choose the item image or fall back to my local asset
-  const nftImg = item?.nftImage || fallbackNft;
-  const authorImg = item?.authorImage || fallbackAuthor; 
-  
+const NFTCard = ({ nft }) => {
   return (
-    // I keep the same markup/classes your template already uses
-    <div className="nft_coll">
-      <div className="nft_wrap">
-        <Link to="/item-details">
-          <img src={nftImg} className="lazy img-fluid" alt={item?.title || "NFT"} />
+    <div className="nft__item">
+      <div className="author_list_pp">
+        <Link
+          to={`/author/${nft.authorId}`}
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          title={`Creator: ${nft.author}`}
+        >
+          <img className="lazy" src={nft.authorImage} alt={nft.author} />
+          <i className="fa fa-check"></i>
         </Link>
       </div>
 
-      <div className="nft_coll_pp">
-        <Link to="/author">
-          <img className="lazy pp-coll" src={authorImg} alt="author" />
+      {nft.expiryDate && <CountdownTimer expiryDate={nft.expiryDate} />}
+
+      <div className="nft__item_wrap">
+        <Link to={`/item-details/${nft.id}`}>
+          <img
+            src={nft.nftImage}
+            className="lazy nft__item_preview"
+            alt={nft.title}
+          />
         </Link>
-        <i className="fa fa-check"></i>
       </div>
 
-      <div className="nft_coll_info">
-        <Link to="/explore">
-          <h4>{item?.title || "Untitled"}</h4>
+      <div className="nft__item_info">
+        <Link to={`/item-details/${nft.id}`}>
+          <h4>{nft.title}</h4>
         </Link>
-        <span>{item?.code ? `ERC-${item.code}` : "ERC-###"}</span>
+        <div className="nft__item_price">{nft.price?.toFixed(2)} ETH</div>
+        <div className="nft__item_like">
+          <i className="fa fa-heart"></i>
+          <span>{nft.likes}</span>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default NFTCard;
