@@ -12,8 +12,8 @@ export default function Home() {
       <Landing />
       <LandingIntro />
       <HotCollections />   {/* yo muestro “Hot Collections” aquí */}
-      <BrowseByCategory />
       <NewItems />
+      <BrowseByCategory />
       <TopSellers />
     </>
   );
