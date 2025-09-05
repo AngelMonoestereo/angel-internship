@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import AuthorItems from "../components/author/AuthorItems";
 import SkeletonCard from "../components/UI/SkeletonCard";
@@ -7,6 +7,8 @@ import SkeletonCard from "../components/UI/SkeletonCard";
 const Author = () => {
   const { authorId } = useParams();
   const [author, setAuthor] = useState(null);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followerCount, setFollowerCount] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,12 +18,22 @@ const Author = () => {
           `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`
         );
         setAuthor(res.data);
+        setFollowerCount(res.data.followers);
       } catch (err) {
         console.error("Error fetching author:", err);
       }
     };
     fetchAuthor();
   }, [authorId]);
+
+  const handleFollowToggle = () => {
+    if (isFollowing) {
+      setFollowerCount((prev) => Math.max(prev - 1, 0));
+    } else {
+      setFollowerCount((prev) => prev + 1);
+    }
+    setIsFollowing((prev) => !prev);
+  };
 
   if (!author) {
     return (
@@ -75,9 +87,11 @@ const Author = () => {
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
                       <div className="profile_follower">
-                        {author.followers} followers
+                        {followerCount} follower{followerCount === 1 ? "" : "s"}
                       </div>
-                      <Link to="#" className="btn-main">Follow</Link>
+                      <button className="btn-main" onClick={handleFollowToggle}>
+                        {isFollowing ? "Unfollow" : "Follow"}
+                      </button>
                     </div>
                   </div>
                 </div>
