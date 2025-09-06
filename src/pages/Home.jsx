@@ -13,8 +13,9 @@ export default function Home() {
       <LandingIntro />
       <HotCollections />   {/* yo muestro “Hot Collections” aquí */}
       <NewItems />
-      <BrowseByCategory />
       <TopSellers />
+      <BrowseByCategory />
+      
     </>
   );
 }

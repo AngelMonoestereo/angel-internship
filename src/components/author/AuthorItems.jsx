@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import NFTCard from "../NFTCard"; // Este path depende de tu estructura
+import NFTCard from "../NFTCard";
 import SkeletonCard from "../UI/SkeletonCard";
 
 const AuthorItems = ({ authorId }) => {
