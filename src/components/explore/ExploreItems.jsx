@@ -58,11 +58,18 @@ const ExploreItems = () => {
           </div>
         ))
       ) : (
-        nfts.map((nft) => (
-          <div className="col-lg-3 col-md-6 col-sm-6 mb-4" key={nft.id}>
-            <NFTCard nft={nft} />
-          </div>
-        ))
+      nfts.map((nft) => (
+  <div
+    className="col-lg-3 col-md-6 col-sm-6 mb-4"
+    key={nft.id}
+    data-aos="fade-up"
+    data-aos-delay="100"
+    data-aos-duration="1000"
+  >
+    <NFTCard nft={nft} />
+  </div>
+))
+
       )}
     </>
   );
